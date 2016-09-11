@@ -1,12 +1,30 @@
 
 #Vectorlist Math Libraries
 
-TARGET += VML
+TARGET += vmld
 
-CONFIG += c++11 staticlib qt
+CONFIG += c++11 staticlib warn_off
+TEMPLATE = lib
+QT += gui
 
-QT += core gui widgets
+INCLUDEPATH += src/
 
-HEADERS += src/*.h
+HEADERS += src/color.h \
+    src/image.h \
+    src/performance.h \
+    src/Random.h \
+    src/rtmath.h \
+    src/vec3f.h \
 
-SOURCES += src/*.cpp
+SOURCES += src/color.cpp \
+    src/image.cpp \
+    src/performance.cpp \
+    src/Random.cpp \
+    src/rtmath.cpp \
+    src/vec3f.cpp \
+
+CONFIG(debug, debug|release){
+    DESTDIR = debug
+}else{
+    DESTDIR = release
+}
