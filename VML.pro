@@ -4,8 +4,10 @@
 TARGET += vmld
 
 CONFIG += c++11 staticlib warn_off
+CONFIG -= release
 TEMPLATE = lib
-QT += gui
+QT -= core
+
 
 INCLUDEPATH += src/
 
