@@ -2,10 +2,18 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include <math.h>
 #include <algorithm>
 #include <qdebug.h>
 #include <vec3f.h>
+#include <memory>
+#include <Macro.h>
+
+struct RGB
+{
+	RGB(unsigned int red, unsigned int green, unsigned int blue)
+		: r(red), g(green), b(blue) {}
+	unsigned int r, g, b;
+};
 
 class Color
 {
@@ -15,70 +23,55 @@ public:
 	Color(const float &f) : r(f), g(f), b(f){}
 	Color(float _r, float _g, float _b) : r(_r), g(_g), b(_b){}
 	Color(const Color &c) :r(c.r), g(c.g), b(c.b){};
-
-	void clamp(float min = 0.0, float max = 1.0)
+	Color(const RGB &rgb)
 	{
-		r = std::max(min, std::min(max, r));
-		g = std::max(min, std::min(max, g));
-		b = std::max(min, std::min(max, b));
+		float inv = 1.f / 255.f;
+		r = (float)rgb.r * inv;
+		g = (float)rgb.g * inv;
+		b = (float)rgb.b * inv;
 	}
+	
+	float length2() const { return r * r + g * g + b * b; }
+	float length() const { return std::sqrt(length2()); }
 
-	Color& operator = (const Color &c)
-	{
-		r = c.r;
-		g = c.g;
-		b = c.b;
-		return *this;
-	}
+	Color& operator=(const Color &c);
 
-	Color& operator += (const Color &c)
-	{
-		r += c.r;
-		g += c.g;
-		b += c.b;
-		return *this;
-	}
+	Color operator+(const Color &c) const;
+	Color& operator+=(const Color &c);
 
-	Color& operator -= (const Color &c)
-	{
-		r -= c.r;
-		g -= c.g;
-		b -= c.b;
-		return *this;
-	}
+	Color operator-(const Color &c) const;
+	Color& operator-=(const Color &c);
 
-	Color& operator *= (const Color &c)
-	{
-		r *= c.r;
-		g *= c.g;
-		b *= c.b;
-		return *this;
-	}
+	Color operator*(float f) const;
+	Color& operator*=(float f);
+	Color operator*(const Color &c) const;
+	Color& operator*=(const Color &c);
 
-	Color& operator /= (const Color &c)
-	{
-		r /= c.r;
-		g /= c.g;
-		b /= c.b;
-		return *this;
-	}
+	Color operator/(float f) const;
+	Color operator/(const Color &c) const;
+	Color& operator/=(float f);
+	Color& operator/=(const Color &c);
+	
 
-	Color& operator *= (float f)
-	{
-		r *= f;
-		g *= f;
-		b *= f;
-		return *this;
-	}
+	/*CONDITIONS*/
+	bool operator==(const Color &other) const;
+	bool operator!=(const Color &other) const;
 
-	Color& operator /= (float f)
-	{
-		r /= f;
-		g /= f;
-		b /= f;
-		return *this;
-	}
+	Color& clamp(float min = 0.0, float max = 1.0);
+	bool isBlack() const;
+	float luminance() const;
 
+	/*STATIC MEMBER*/
+	static const Color black;
+	static const Color white;
+	static const Color red;
+	static const Color yellow;
+	static const Color error;
+	static const Color null;
+	
+
+	static Color clamp(const Color &c, float min = 0.0, float max = 1.0);
+	static Color gamma(const Color &c, float gamma = 2.2f);
 	
 	friend QDebug& operator<<(QDebug& d,const Color& c)
 	{
@@ -86,39 +79,133 @@ public:
 	}
 };
 
-inline Color operator+(const Color &c1, const Color &c2)
+inline Color& Color::operator = (const Color &c)
 {
-	return Color(c1.r + c2.r, c1.g + c2.g, c1.b + c2.b);
+	r = c.r;
+	g = c.g;
+	b = c.b;
+	return *this;
 }
+
+inline Color Color::operator+(const Color &c) const
+{
+	return Color(r + c.r, g + c.g, b + c.b);
+}
+
+inline Color& Color::operator+=(const Color &c)
+{
+	r += c.r;
+	g += c.g;
+	b += c.b;
+	return *this;
+}
+
+inline Color Color::operator-(const Color &c) const
+{
+	return Color(r - c.r, g - c.g, b - c.b);
+}
+
+inline Color& Color::operator-=(const Color &c)
+{
+	r -= c.r;
+	g -= c.g;
+	b -= c.b;
+	return *this;
+}
+
+inline Color Color::operator*(float f) const
+{
+	return Color(r * f, g * f, b * f);
+}
+
+inline Color& Color::operator*=(float f)
+{
+	r *= f;
+	g *= f;
+	b *= f;
+	return *this;
+}
+
+inline Color Color::operator*(const Color &c) const
+{
+	return Color(r * c.r, g * c.g, b * c.b);
+}
+
+inline Color& Color::operator*=(const Color &c)
+{
+	r *= c.r;
+	g *= c.g;
+	b *= c.b;
+	return *this;
+}
+
+inline Color Color::operator/(float f) const
+{
+	float inv = 1.0f / f;
+	return Color(r * inv, g * inv, b * inv);
+}
+
+inline Color Color::operator/(const Color &c) const
+{
+	return Color(r / c.r, g / c.g, b / c.b);
+}
+
+inline Color& Color::operator/=(float f)
+{
+	float inv = 1.f / f;
+	r *= inv;
+	g *= inv;
+	b *= inv;
+	return *this;
+}
+
+inline Color& Color::operator/=(const Color &c)
+{
+	r /= c.r;
+	g /= c.g;
+	b /= c.b;
+	return *this;
+}
+
+inline Color operator*(float f, const Color &c)
+{
+	return c * f;
+}
+
+//global minus operator
 
 inline Color operator-(const Color &c1, const Color &c2)
 {
 	return Color(c1.r - c2.r, c1.g - c2.g, c1.b - c2.b);
 }
 
-inline Color operator*(const Color &c1, const Color &c2)
+inline bool Color::operator==(const Color &other) const
 {
-	return Color(c1.r * c2.r, c1.g * c2.g, c1.b * c2.b);
+	return r == other.r && g == other.g && b == other.b;
+}
+inline bool Color::operator!=(const Color &other) const
+{
+	return !(*this == other);
 }
 
-inline Color operator/(const Color &c1, const Color &c2)
+inline Color& Color::clamp(float min, float max)
 {
-	return Color(c1.r / c2.r, c1.g / c2.g, c1.b / c2.b);
+	r = std::max(min, std::min(max, r));
+	g = std::max(min, std::min(max, g));
+	b = std::max(min, std::min(max, b));
+	return *this;
 }
 
-inline Color operator*(const Color &c1, float f)
+inline bool Color::isBlack() const
 {
-	return Color(c1.r * f, c1.g * f, c1.b * f);
+	return (r == 0.f && b == 0.f && b == 0.f);
 }
 
-inline Color operator*(float f,const Color &c1)
+inline float Color::luminance() const
 {
-	return Color(f * c1.r,f * c1.g, f * c1.b);
+	return 0.212671f * r + 0.715160f * g + 0.072169f * b;
 }
 
-inline Color operator/(const Color &c1, float f)
-{
-	return Color(c1.r / f, c1.g / f, c1.b / f);
-}
+typedef std::unique_ptr<Color[]> ColorPtr;
 
 #endif//COLOR_H

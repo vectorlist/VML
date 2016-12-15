@@ -30,3 +30,17 @@ double Random::haltonSeq(const unsigned int index, const unsigned int base)
 	return ret;
 }
 
+float Random::genDistFloat()
+{
+	return rndFloat(rndGenTime);
+}
+
+float Random::genDistFloatPI()
+{
+	return rndFloatPI(rndGenTime);
+}
+
+int Random::genDistInt()
+{
+	return rndInt(rndEngine);
+}

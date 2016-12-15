@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VML", "VML.vcxproj", "{BCDA3428-C051-378B-967A-9B464A6CCF9E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VML_Main", "..\VML_Main\VML_Main.vcxproj", "{3FA40E92-A089-4AF7-B1A7-26CF52D59282}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCDA3428-C051-378B-967A-9B464A6CCF9E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BCDA3428-C051-378B-967A-9B464A6CCF9E}.Debug|Win32.Build.0 = Debug|Win32
+		{BCDA3428-C051-378B-967A-9B464A6CCF9E}.Release|Win32.ActiveCfg = Release|Win32
+		{BCDA3428-C051-378B-967A-9B464A6CCF9E}.Release|Win32.Build.0 = Release|Win32
+		{3FA40E92-A089-4AF7-B1A7-26CF52D59282}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3FA40E92-A089-4AF7-B1A7-26CF52D59282}.Debug|Win32.Build.0 = Debug|Win32
+		{3FA40E92-A089-4AF7-B1A7-26CF52D59282}.Release|Win32.ActiveCfg = Release|Win32
+		{3FA40E92-A089-4AF7-B1A7-26CF52D59282}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
