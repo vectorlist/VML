@@ -2,24 +2,46 @@
 #define PERFORMANCE_H
 
 #include <chrono>
-#include <QString>
+#include <string>
 
-//#define PF() performance::global()
+using std::string;
+
+enum PerformanceType
+{
+	None,
+	NanoSeconds,
+	MicroSeconds,
+	MilliSeconds
+};
 
 class performance
 {
 public:
-	performance(){};
+	performance(PerformanceType type = None) : m_type(type){};
 	~performance(){};
 
 	void chronoStart();
 	void chronoEnd();
-	QString chronoElapseTime();
+	string chronoElapseTime();
 
 protected:
 	std::chrono::system_clock::time_point cStart;
 	std::chrono::system_clock::time_point cEnd;
-	long long seconds;
+	//for none
+	//long long seconds;
+	std::chrono::seconds sec;
+
+	std::chrono::nanoseconds Nano;
+	std::chrono::microseconds Micro;
+	std::chrono::milliseconds Milli;
+
+	PerformanceType m_type;
+
+private:
+	string none_output();
+	string nano_output();
+	string micro_output();
+	string milli_output();
 	
 };
 

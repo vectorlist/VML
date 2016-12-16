@@ -1,11 +1,5 @@
-﻿  color.cpp
-  matrix3x3.cpp
+﻿  Quaternion.cpp
   matrix4x4.cpp
   performance.cpp
-  Quaternion.cpp
-  Random.cpp
-  rtmath.cpp
-  vec3f.cpp
-  vec4f.cpp
   Generating Code...
   VML.vcxproj -> E:\github\VML\debug\VML.lib

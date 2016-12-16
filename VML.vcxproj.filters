@@ -58,9 +58,6 @@
     <ClInclude Include="include\vec2f.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\vec3f.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\vec4f.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -83,6 +80,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec3f.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
